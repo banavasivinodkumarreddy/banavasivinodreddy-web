@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vinod Kumar Reddy Banavasi | Structural Biologist & Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #050e18;
+  --bg2: #081420;
+  --teal: #00d4b4;
+  --teal2: #00a890;
+  --amber: #f5a623;
+  --gold: #c9a84c;
+  --text: #cce4f0;
+  --muted: #527585;
+  --border: rgba(0,212,180,0.13);
+  --card: rgba(6,22,38,0.85);
+  --section-pad: 5rem 2rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;font-size:14px;line-height:1.75;overflow-x:hidden;}
+
+/* CANVAS */
+#mol-canvas{position:fixed;inset:0;z-index:0;opacity:0.14;pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 3.5rem;background:rgba(5,14,24,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:0.5rem;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--teal);letter-spacing:0.04em;}
+.nav-symbol{font-size:1.4rem;line-height:1;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--teal);}
+
+/* HERO */
+#hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;max-width:1060px;margin:0 auto;padding:8rem 2rem 4rem;}
+.hero-tag{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--teal);margin-bottom:1.4rem;animation:fadeUp 0.7s 0.2s both;}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,7.5vw,6rem);line-height:1.0;letter-spacing:-0.02em;color:#fff;animation:fadeUp 0.7s 0.4s both;}
+.hero-name span{color:var(--teal);}
+.hero-sub{font-family:'Lora',serif;font-style:italic;font-size:clamp(0.95rem,2vw,1.25rem);color:var(--muted);margin-top:1.2rem;max-width:580px;animation:fadeUp 0.7s 0.6s both;}
+.hero-ctas{display:flex;gap:1rem;margin-top:2.5rem;animation:fadeUp 0.7s 0.8s both;flex-wrap:wrap;}
+.btn{display:inline-block;padding:0.7rem 1.6rem;border-radius:2px;font-size:0.72rem;letter-spacing:0.13em;text-transform:uppercase;text-decoration:none;font-family:'DM Mono',monospace;transition:all 0.22s;cursor:pointer;border:1px solid;}
+.btn-primary{background:var(--teal);color:var(--bg);border-color:var(--teal);font-weight:600;}
+.btn-primary:hover{background:var(--teal2);border-color:var(--teal2);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--teal);border-color:var(--border);}
+.btn-outline:hover{border-color:var(--teal);background:rgba(0,212,180,0.05);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border);animation:fadeUp 0.7s 1s both;flex-wrap:wrap;}
+.stat-item{display:flex;flex-direction:column;gap:0.2rem;}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--teal);line-height:1;}
+.stat-label{font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;}
+
+/* SECTIONS */
+section{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:var(--section-pad);}
+.sec-border{border-top:1px solid var(--border);}
+.sec-label{font-size:0.65rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:2.5rem;line-height:1.1;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:4rem;align-items:start;}
+.about-text p{color:var(--muted);margin-bottom:1.1rem;font-size:0.88rem;line-height:1.95;}
+.about-text p strong{color:var(--text);}
+.about-info{display:flex;flex-direction:column;gap:1rem;}
+.info-row{padding:0.85rem 1.1rem;border:1px solid var(--border);border-left:3px solid var(--teal);background:var(--card);border-radius:2px;}
+.info-row-label{font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:0.25rem;}
+.info-row-value{color:var(--text);font-size:0.82rem;}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.3rem;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.7rem;transition:border-color 0.25s,transform 0.25s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),transparent);opacity:0;transition:opacity 0.3s;}
+.card:hover{border-color:var(--teal);transform:translateY(-4px);}
+.card:hover::before{opacity:1;}
+.card-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:rgba(0,212,180,0.1);line-height:1;margin-bottom:0.7rem;}
+.card h3{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.7rem;}
+.card p{font-size:0.78rem;color:var(--muted);line-height:1.85;}
+.card-amber{border-color:rgba(245,166,35,0.15);}
+.card-amber::before{background:linear-gradient(90deg,var(--amber),transparent) !important;}
+.card-amber:hover{border-color:var(--amber) !important;}
+.card-amber h3{color:var(--amber);}
+.card-amber .card-num{color:rgba(245,166,35,0.1);}
+
+/* TAGS */
+.tag-list{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:1rem;}
+.tag{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.55rem;border:1px solid var(--border);border-radius:2px;color:var(--teal);background:rgba(0,212,180,0.04);}
+.tag-amber{color:var(--amber);border-color:rgba(245,166,35,0.25);background:rgba(245,166,35,0.04);}
+
+/* PUBLICATIONS */
+.pub-list{display:flex;flex-direction:column;gap:1.1rem;}
+.pub-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:2px;padding:1.4rem 1.6rem;}
+.pub-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap;gap:0.4rem;}
+.pub-type{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);}
+.pub-if{font-size:0.62rem;color:var(--muted);}
+.pub-card h3{font-family:'Syne',sans-serif;font-size:0.92rem;font-weight:700;color:#fff;margin-bottom:0.4rem;line-height:1.4;}
+.pub-card p{font-size:0.77rem;color:var(--muted);margin-bottom:0.35rem;}
+.pub-doi{font-size:0.72rem;color:var(--teal);}
+
+/* VISION */
+.vision-intro{font-family:'Lora',serif;font-style:italic;font-size:1rem;color:var(--muted);max-width:620px;margin-bottom:2.5rem;line-height:1.85;}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.5rem;}
+.skill-group h4{font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--teal);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.9rem;padding-bottom:0.45rem;border-bottom:1px solid var(--border);}
+.skill-item{display:flex;align-items:center;gap:0.55rem;padding:0.35rem 0;font-size:0.78rem;color:var(--muted);transition:color 0.2s;}
+.skill-item:hover{color:var(--text);}
+.skill-dot{width:4px;height:4px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+
+/* CONTACT */
+#contact{text-align:center;}
+.contact-sub{font-family:'Lora',serif;font-style:italic;font-size:0.88rem;color:var(--muted);margin-bottom:2.2rem;}
+.contact-links{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;}
+.contact-link{display:flex;align-items:center;gap:0.5rem;padding:0.65rem 1.3rem;border:1px solid var(--border);border-radius:2px;color:var(--muted);text-decoration:none;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.22s;background:var(--card);}
+.contact-link:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:1.8rem;border-top:1px solid var(--border);font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.animate-in{animation:fadeUp 0.65s ease both;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{gap:1rem;}
+  .about-grid{grid-template-columns:1fr;gap:2rem;}
+  section{padding:3.5rem 1.5rem;}
+  .hero-stats{gap:1.5rem;}
+}
+</style>
+</head>
+<body>
+<canvas id="mol-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-symbol">ॐ</span>
+    BANAVASI
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Structural Biologist · Drug Discovery Researcher · Tampa, FL</div>
+  <h1 class="hero-name">Vinod Kumar<br/><span>Reddy Banavasi</span></h1>
+  <p class="hero-sub">Engineering molecules at the frontier of structural biology — and reimagining what affordable diagnostics can look like for the world.</p>
+  <div class="hero-ctas">
+    <a href="#research" class="btn btn-primary">View Research</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Publications · IF 7.4</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4+</span>
+      <span class="stat-label">Active Projects</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3.8</span>
+      <span class="stat-label">GPA · M.Sc. USF</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Research Labs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec-border">
+  <div class="sec-label">01 — About</div>
+  <div class="sec-title animate-in">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text animate-in">
+      <p>I'm a biotechnology researcher working across two labs at the <strong>University of South Florida</strong> — the <strong>Yu Chen Lab</strong> (structural biology & drug discovery) and the <strong>Thao Ho Lab</strong> (gut biology & clinical research).</p>
+      <p>My work spans <strong>SARS-CoV-2 Mpro and EV-A71 2C protein crystallography</strong>, <strong>structure-based virtual screening</strong> against BBPSTS, GPSB, and ZBP1 targets, and <strong>iron metabolism studies</strong> in neonatal intestinal organoids using clinical faecal and serum samples.</p>
+      <p>I'm driven by a long-term vision of building <strong>affordable AI-driven genomic diagnostics</strong> — detecting disease risk before symptoms appear, using sequencing patterns, mutation rates, and ML to generate personalized health insights.</p>
+      <p>Outside the lab, I practice <strong>yoga, meditation, and Vedic philosophy</strong>. I'm fascinated by the bridge between ancient pattern-based systems and modern predictive biology. I'm actively pursuing <strong>PhD opportunities</strong> while building toward entrepreneurship.</p>
+    </div>
+    <div class="about-info animate-in">
+      <div class="info-row">
+        <div class="info-row-label">Institution</div>
+        <div class="info-row-value">University of South Florida</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Labs</div>
+        <div class="info-row-value">Yu Chen Lab · Thao Ho Lab</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Degree</div>
+        <div class="info-row-value">M.Sc. Biotechnology · GPA 3.8</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Undergrad</div>
+        <div class="info-row-value">B.Sc. Microbiology, Genetics & Chemistry · Osmania University</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Location</div>
+        <div class="info-row-value">Tampa, Florida, USA</div>
+      </div>
+      <div class="info-row">
+        <div class="info-row-label">Seeking</div>
+        <div class="info-row-value">PhD Programs · Industry Roles · Collaborations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" class="sec-border">
+  <div class="sec-label">02 — Research</div>
+  <div class="sec-title animate-in">Current Projects</div>
+  <div class="cards-grid">
+    <div class="card animate-in">
+      <div class="card-num">01</div>
+      <h3>Viral Protease Crystallography</h3>
+      <p>Crystallizing SARS-CoV-2 Mpro mutants (E166V, E166V/T169S, L50F) and Enterovirus A71 (EV-A71) 2C ATPase/helicase mutants — a validated broad-spectrum antiviral target. Optimizing conditions, seeding, and preparing for synchrotron beamline data collection.</p>
+      <div class="tag-list"><span class="tag">X-ray Crystallography</span><span class="tag">Mpro · EV-A71 2C</span><span class="tag">Antiviral Drug Discovery</span></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-num">02</div>
+      <h3>Computational Docking Pipeline</h3>
+      <p>Structure-based virtual screening against BBPSTS, GPSB, and ZBP1 targets. Building automated Python/Linux ML/DL-integrated docking pipelines for high-throughput pose filtering, matching spheres, and dielectric optimization for lead identification.</p>
+      <div class="tag-list"><span class="tag">Molecular Docking</span><span class="tag">Python · Linux</span><span class="tag">ML/DL</span><span class="tag">GNINA · ProLIF</span></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-num">03</div>
+      <h3>Gut Biology & Iron Metabolism</h3>
+      <p>Clinical faecal and serum sample processing for iron metabolism and microbiome studies via qPCR, RT-PCR, and ELISA. Iron exposure studies on neonatal intestinal enteroids — immunofluorescence staining, gene expression analysis, and prostaglandin quantification.</p>
+      <div class="tag-list"><span class="tag">Enteroids</span><span class="tag">qPCR · ELISA</span><span class="tag">Iron Metabolism</span><span class="tag">Microbiome</span></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-num">04</div>
+      <h3>Flow Cytometry & Immunophenotyping</h3>
+      <p>Executed a 6-color multicolor panel to analyze B-cell maturation (IgD) and immune activation (CD69) in whole blood samples. Full workflow: antibody staining, RBC lysis, gating strategy development, fluorescence compensation, FlowJo analysis.</p>
+      <div class="tag-list"><span class="tag">6-Color Panel</span><span class="tag">B-cell Characterization</span><span class="tag">FlowJo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications" class="sec-border">
+  <div class="sec-label">03 — Publications</div>
+  <div class="sec-title animate-in">Peer-Reviewed Work</div>
+  <div class="pub-list">
+    <div class="pub-card animate-in">
+      <div class="pub-meta">
+        <span class="pub-type">Review Article · IJPRA 2025</span>
+        <span class="pub-if">Impact Factor: 7.429 · ISO 9001:2008 Certified</span>
+      </div>
+      <h3>Gene Editing: The Revolution of CRISPR Technology</h3>
+      <p><strong style="color:var(--text)">Banavasi V.K.R.</strong> — International Journal of Pharmaceutical Research and Applications, Vol. 10, Issue 2, pp. 344–348. ISSN: 2456-4494.</p>
+      <p class="pub-doi">DOI: 10.35629/4494-1002344348</p>
+      <div class="tag-list"><span class="tag">CRISPR-Cas9</span><span class="tag">Gene Editing</span><span class="tag">Precision Medicine</span><span class="tag">HDR · NHEJ</span></div>
+    </div>
+    <div class="pub-card animate-in">
+      <div class="pub-meta">
+        <span class="pub-type">Review Article · IJPRA 2025</span>
+        <span class="pub-if">Impact Factor: 7.429 · ISO 9001:2008 Certified</span>
+      </div>
+      <h3>Epigenetics, Stem Cells & Personalized Medicine: A New Era in Cancer Therapy</h3>
+      <p><strong style="color:var(--text)">Banavasi V.K.R.</strong> — International Journal of Pharmaceutical Research and Applications, Vol. 10, Issue 2, pp. 349–353. ISSN: 2456-4494.</p>
+      <p class="pub-doi">DOI: 10.35629/4494-1002349353</p>
+      <div class="tag-list"><span class="tag">Epigenetics</span><span class="tag">Cancer Stem Cells</span><span class="tag">Precision Oncology</span><span class="tag">CAR-T · Liquid Biopsy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision" class="sec-border">
+  <div class="sec-label">04 — Vision & Beyond</div>
+  <div class="sec-title animate-in">Where I'm Headed</div>
+  <p class="vision-intro animate-in">"Science and spirituality are not opposites — they are two languages describing the same underlying patterns of the universe."</p>
+  <div class="cards-grid">
+    <div class="card animate-in">
+      <div class="card-num">🧬</div>
+      <h3>Genomic Diagnostics for Everyone</h3>
+      <p>My entrepreneurial vision: an affordable AI-driven platform that uses gene sequencing, mutation patterns, and ML to detect disease risk before symptoms emerge — giving every person a probabilistic health map and personalized lifestyle guidance.</p>
+      <div class="tag-list"><span class="tag">Gene Sequencing</span><span class="tag">AI · ML</span><span class="tag">Preventive Health</span><span class="tag">Diagnostics</span></div>
+    </div>
+    <div class="card card-amber animate-in">
+      <div class="card-num" style="color:rgba(245,166,35,0.1);">ॐ</div>
+      <h3>Science Meets Ancient Wisdom</h3>
+      <p>Vedic astrology is fundamentally mathematical — cyclical patterns, probability, timing. I'm personally exploring whether its pattern-recognition framework can serve as a complementary lens alongside genomics for predicting health trajectories. An unconventional add-on to the science.</p>
+      <div class="tag-list"><span class="tag tag-amber">Vedic Systems</span><span class="tag tag-amber">Pattern Recognition</span><span class="tag tag-amber">Predictive Biology</span></div>
+    </div>
+    <div class="card animate-in">
+      <div class="card-num">🎓</div>
+      <h3>PhD & Academic Research</h3>
+      <p>Actively seeking PhD opportunities in structural biology, computational drug discovery, or genomics — to build the scientific foundation that bridges bench research with translational innovation. Target programs: Scripps, UCSF, UW Seattle.</p>
+      <div class="tag-list"><span class="tag">Structural Biology</span><span class="tag">Drug Discovery</span><span class="tag">Genomics</span></div>
+    </div>
+    <div class="card card-amber animate-in">
+      <div class="card-num" style="color:rgba(245,166,35,0.1);">🧘</div>
+      <h3>The Whole Person</h3>
+      <p>I practice yoga, meditation, and draw deeply from Vedic philosophy. I'm a competitive badminton player at USF and a district-level swimmer. If I weren't a scientist, I'd be a healer and therapist. I believe the best science comes from a balanced, grounded mind.</p>
+      <div class="tag-list"><span class="tag tag-amber">Yoga · Meditation</span><span class="tag tag-amber">Badminton · Swimming</span><span class="tag tag-amber">Vedic Philosophy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="sec-border">
+  <div class="sec-label">05 — Expertise</div>
+  <div class="sec-title animate-in">Skills & Tools</div>
+  <div class="skills-grid animate-in">
+    <div class="skill-group">
+      <h4>Structural Biology</h4>
+      <div class="skill-item"><div class="skill-dot"></div>Protein Crystallography</div>
+      <div class="skill-item"><div class="skill-dot"></div>Crystal Seeding & Harvesting</div>
+      <div class="skill-item"><div class="skill-dot"></div>Buffer Formulation</div>
+      <div class="skill-item"><div class="skill-dot"></div>Condition Optimization</div>
+      <div class="skill-item"><div class="skill-dot"></div>Beamline Sample Prep</div>
+    </div>
+    <div class="skill-group">
+      <h4>Computational</h4>
+      <div class="skill-item"><div class="skill-dot"></div>Molecular Docking</div>
+      <div class="skill-item"><div class="skill-dot"></div>Virtual Screening</div>
+      <div class="skill-item"><div class="skill-dot"></div>Python · Linux</div>
+      <div class="skill-item"><div class="skill-dot"></div>ML/DL (Biology)</div>
+      <div class="skill-item"><div class="skill-dot"></div>GNINA · ProLIF · RDKit</div>
+    </div>
+    <div class="skill-group">
+      <h4>Molecular Biology</h4>
+      <div class="skill-item"><div class="skill-dot"></div>qPCR · RT-PCR</div>
+      <div class="skill-item"><div class="skill-dot"></div>Western Blot · ELISA</div>
+      <div class="skill-item"><div class="skill-dot"></div>RNA/DNA Extraction</div>
+      <div class="skill-item"><div class="skill-dot"></div>Molecular Cloning</div>
+      <div class="skill-item"><div class="skill-dot"></div>Protein Purification</div>
+    </div>
+    <div class="skill-group">
+      <h4>Cell Biology</h4>
+      <div class="skill-item"><div class="skill-dot"></div>Mammalian Cell Culture</div>
+      <div class="skill-item"><div class="skill-dot"></div>Organoid Culture</div>
+      <div class="skill-item"><div class="skill-dot"></div>Immunofluorescence</div>
+      <div class="skill-item"><div class="skill-dot"></div>Flow Cytometry (6-color)</div>
+      <div class="skill-item"><div class="skill-dot"></div>FlowJo · MTT Assay</div>
+    </div>
+    <div class="skill-group">
+      <h4>Clinical Research</h4>
+      <div class="skill-item"><div class="skill-dot"></div>Clinical Sample Handling</div>
+      <div class="skill-item"><div class="skill-dot"></div>Iron Metabolism Studies</div>
+      <div class="skill-item"><div class="skill-dot"></div>Microbiome Analysis</div>
+      <div class="skill-item"><div class="skill-dot"></div>Prostaglandin Analysis</div>
+      <div class="skill-item"><div class="skill-dot"></div>Gene Expression Analysis</div>
+    </div>
+    <div class="skill-group">
+      <h4>Professional</h4>
+      <div class="skill-item"><div class="skill-dot"></div>Independent Researcher</div>
+      <div class="skill-item"><div class="skill-dot"></div>Team Collaborator</div>
+      <div class="skill-item"><div class="skill-dot"></div>Scientific Communication</div>
+      <div class="skill-item"><div class="skill-dot"></div>Critical Thinking</div>
+      <div class="skill-item"><div class="skill-dot"></div>Project Management</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec-border">
+  <div class="sec-label">06 — Contact</div>
+  <div class="sec-title animate-in">Let's Connect</div>
+  <p class="contact-sub animate-in">Open to PhD opportunities, industry roles, research collaborations, and meaningful conversations.</p>
+  <div class="contact-links animate-in">
+    <a href="mailto:vinodkumarreddy@usf.edu" class="contact-link">✉ USF Email</a>
+    <a href="mailto:banavasivinodreddy@gmail.com" class="contact-link">✉ Gmail</a>
+    <a href="https://www.linkedin.com/in/banavasivinodreddy" target="_blank" class="contact-link">in LinkedIn</a>
+    <a href="https://banavasivinodkumarreddy.github.io/banavasivinodreddy-web/" target="_blank" class="contact-link">⌥ GitHub</a>
+  </div>
+</section>
+
+<footer>© 2026 Vinod Kumar Reddy Banavasi · Built with purpose · Hosted on GitHub Pages</footer>
+
+<script>
+// Molecular canvas background
+const canvas = document.getElementById('mol-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, nodes;
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  nodes = Array.from({length: Math.floor(W*H/20000)}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3,
+    r: Math.random()*2+1.5
+  }));
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  nodes.forEach((n,i) => {
+    n.x+=n.vx; n.y+=n.vy;
+    if(n.x<0||n.x>W) n.vx*=-1;
+    if(n.y<0||n.y>H) n.vy*=-1;
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle='#00d4b4'; ctx.fill();
+    for(let j=i+1;j<nodes.length;j++){
+      const m=nodes[j], dx=n.x-m.x, dy=n.y-m.y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){ ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(m.x,m.y);
+        ctx.strokeStyle=`rgba(0,212,180,${(1-d/120)*0.5})`; ctx.lineWidth=0.7; ctx.stroke(); }
+    }
+  });
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize', resize);
+resize(); draw();
+
+// Scroll animations — show everything by default, animate on scroll
+document.querySelectorAll('.animate-in').forEach((el, i) => {
+  el.style.opacity = '1';
+  el.style.transform = 'none';
+});
+</script>
+</body>
+</html>
