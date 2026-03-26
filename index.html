@@ -151,12 +151,19 @@ footer{position:relative;z-index:1;text-align:center;padding:1.8rem;border-top:1
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-tag">Structural Biologist · Drug Discovery Researcher · Tampa, FL</div>
-  <h1 class="hero-name">Vinod Kumar<br/><span>Reddy Banavasi</span></h1>
+  <div style="display:flex;align-items:center;gap:2rem;margin-bottom:1.5rem;">
+    <img id="profile-photo" src="photo.jpg" alt="Vinod Kumar Reddy Banavasi" onerror="this.style.display='none';document.getElementById('photo-placeholder').style.display='flex';" style="width:150px;height:150px;border-radius:50%;border:2px solid var(--teal);object-fit:cover;box-shadow:0 0 30px rgba(0,212,180,0.2);flex-shrink:0;"/>
+    <div id="photo-placeholder" style="width:150px;height:150px;border-radius:50%;border:2px dashed var(--border);display:none;align-items:center;justify-content:center;color:var(--muted);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0;">Photo</div>
+    <div>
+      <div class="hero-tag" style="margin-bottom:0.8rem;">Structural Biologist · Drug Discovery Researcher · Tampa, FL</div>
+      <h1 class="hero-name">Vinod Kumar<br/><span>Reddy Banavasi</span></h1>
+    </div>
+  </div>
   <p class="hero-sub">Engineering molecules at the frontier of structural biology — and reimagining what affordable diagnostics can look like for the world.</p>
   <div class="hero-ctas">
     <a href="#research" class="btn btn-primary">View Research</a>
     <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    <a href="Vinod_CV.pdf" download class="btn btn-outline" style="border-color:var(--amber);color:var(--amber);">↓ Download CV</a>
   </div>
   <div class="hero-stats">
     <div class="stat-item">
